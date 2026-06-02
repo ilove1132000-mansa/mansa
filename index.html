@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만사인력 - 믿음과 신뢰의 인력 매칭 | 인천 남동구</title>
+    <meta name="description" content="인천 남동구 만사인력 - 건설, 가사, 사무 등 검증된 인력을 신속하고 정확하게 매칭해 드립니다. 대표전화 032-279-5501">
+    <meta name="keywords" content="인천 인력, 남동구 인력사무소, 만사인력, 구인구직, 일용직, 건설인력, 가사도우미">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        .service-card { transition: all 0.4s ease; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .input-field { 
+            width: 100%; 
+            padding: 0.6rem 1rem; 
+            border: 1px solid #d1d5db; 
+            border-radius: 0.5rem; 
+            transition: all 0.2s;
+        }
+        .input-field:focus { 
+            outline: none; 
+            border-color: #2563eb; 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
+        }
+        .form-label { 
+            display: block; 
+            font-size: 0.875rem; 
+            font-weight: 500; 
+            color: #374151; 
+            margin-bottom: 0.25rem; 
+        }
+        .required-mark { color: #ef4444; margin-left: 2px; }
+        
+        /* 로딩 스피너 */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 알림 토스트 */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateX(420px);
+            transition: transform 0.4s ease;
+            max-width: 360px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
+        
+        /* 히어로 애니메이션 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up { animation: fadeInUp 1s ease-out; }
+
+        /* 선택 카드 */
+        .choice-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        .choice-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -5px rgba(0,0,0,0.15);
+        }
+        .choice-card.blue:hover { border-color: #2563eb; }
+        .choice-card.green:hover { border-color: #10b981; }
+
+        /* 폼 영역 표시/숨김 */
+        .form-hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- 상단 정보 바 -->
+    <div class="bg-slate-800 text-white py-2 px-6 hidden md:block">
+        <div class="max-w-7xl mx-auto flex justify-between text-sm opacity-90">
+            <div><i class="fa-solid fa-location-dot mr-2"></i>인천광역시 남동구 장승남로 51 2층</div>
+            <div class="flex gap-4">
+                <span><i class="fa-solid fa-phone mr-1"></i> 032-279-5501</span>
+                <span><i class="fa-solid fa-envelope mr-1"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3cacfccd5c692929091939393e3c4cec2cacf8dc0ccce">[email&#160;protected]</a></span>
+                <span><i class="fa-regular fa-clock mr-1"></i> 평일 08:00 - 18:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 헤더 / 네비게이션 -->
+    <header class="sticky top-0 bg-white/95 backdrop-blur-md shadow-sm z-50">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-blue-700 cursor-pointer flex items-center gap-2" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <i class="fa-solid fa-handshake-angle"></i>
+                만사인력
+            </div>
+            <ul class="hidden lg:flex gap-8 font-medium">
+                <li><a href="#about" class="hover:text-blue-600 transition">회사소개</a></li>
+                <li><a href="#services" class="hover:text-blue-600 transition">서비스안내</a></li>
+                <li><a href="#apply" class="hover:text-blue-600 transition font-bold text-blue-600">구인/구직신청</a></li>
+                <li><a href="#contact" class="hover:text-blue-600 transition">오시는길</a></li>
+            </ul>
+            <button onclick="location.href='tel:032-279-5501'" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-blue-700 transition-all">
+                <i class="fa-solid fa-phone mr-1"></i> 전화상담
+            </button>
+        </nav>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="relative h-[450px] flex items-center justify-center text-white overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-700/60 z-10"></div>
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2959210?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover" alt="만사인력">
+        <div class="relative z-20 text-center px-6 fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">신뢰와 정직의 파트너</h2>
+            <p class="text-xl opacity-90 mb-6">인천 최고의 전문 인력 매칭 서비스, 만사인력</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#apply" class="bg-white text-blue-700 px-8 py-3 rounded-full font-bold hover:bg-yellow-300 transition shadow-lg">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>온라인 신청하기
+                </a>
+                <a href="tel:032-279-5501" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-500 transition shadow-lg border-2 border-white">
+                    <i class="fa-solid fa-phone mr-2"></i>032-279-5501
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 회사소개 섹션 -->
+    <section id="about" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
+                    <img src="ceo_photo.jpg" alt="대표이사 정혜옥" 
+                         onerror="this.src='https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600';" 
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-6 rounded-xl shadow-xl">
+                    <p class="text-lg font-bold">대표이사 정혜옥</p>
+                    <p class="text-sm opacity-80">믿음으로 보답하겠습니다</p>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="text-blue-600 font-bold uppercase tracking-widest text-sm">CEO Greetings</h3>
+                <h2 class="text-4xl font-bold leading-tight">사람이 자산입니다.<br>최고의 인재를 약속합니다.</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    만사인력 홈페이지를 방문해주셔서 감사합니다.<br><br>
+                    저희는 다년간의 노하우를 바탕으로 건설, 가사, 사무 등 각 분야의 검증된 인력을 신속하고 정확하게 매칭해 드리고 있습니다. 단순히 일자리를 연결하는 것을 넘어, 구인자와 구직자 모두가 만족할 수 있는 행복한 동행을 꿈꿉니다.
+                </p>
+                <div class="pt-4 border-t border-gray-200 grid grid-cols-3 gap-4">
+                    <div><p class="text-3xl font-bold text-blue-600">15+</p><p class="text-sm text-gray-500">년 경력</p></div>
+                    <div><p class="text-3xl font-bold text-blue-600">5,000+</p><p class="text-sm text-gray-500">매칭 성공</p></div>
+                    <div><p class="text-3xl font-bold text-blue-600">24h</p><p class="text-sm text-gray-500">상담 대기</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 서비스 안내 섹션 -->
+    <section id="services" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h3 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-2">Our Services</h3>
+                <h2 class="text-4xl font-bold">전문 인력 매칭 서비스</h2>
+                <p class="text-gray-500 mt-4">필요한 분야의 검증된 인력을 신속하게 연결해 드립니다.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-helmet-safety text-2xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">건설/현장 인력</h4>
+                    <p class="text-gray-500 text-sm">목수, 철근, 미장, 형틀, 잡부 등 숙련 기능공</p>
+                </div>
+                <div class="service-card bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center">
+                    <div class="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-broom text-2xl text-pink-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">가사/돌봄 도우미</h4>
+                    <p class="text-gray-500 text-sm">청소, 가사, 산후도우미, 간병 서비스</p>
+                </div>
+                <div class="service-card bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-industry text-2xl text-emerald-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">제조/생산직</h4>
+                    <p class="text-gray-500 text-sm">공장, 물류, 포장, 단순노무 인력</p>
+                </div>
+                <div class="service-card bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center">
+                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-utensils text-2xl text-amber-600"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">서비스/주방</h4>
+                    <p class="text-gray-500 text-sm">홀서빙, 주방보조, 조리, 설거지 인력</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 구인/구직 신청 섹션 -->
+    <section id="apply" class="py-20 px-6 bg-slate-100">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-2">Online Application</h3>
+                <h2 class="text-4xl font-bold mb-4">온라인 신청</h2>
+                <p class="text-gray-500">아래에서 신청 유형을 선택해 주세요. 대표 이메일로 즉시 전송되며, 데이터베이스에 자동 저장됩니다.</p>
+            </div>
+
+            <!-- 1단계: 선택 카드 (초기 화면) -->
+            <div id="choice-area" class="grid md:grid-cols-2 gap-8">
+                <div class="choice-card blue bg-white p-10 rounded-3xl shadow-lg text-center" onclick="showForm('post')">
+                    <div class="bg-blue-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-building text-4xl text-blue-600"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-blue-600 mb-3">구인 신청</h4>
+                    <p class="text-gray-500 mb-4">사업주이시거나 일할 사람을 구하시는 분</p>
+                    <p class="text-sm text-blue-600 font-medium">
+                        <i class="fa-solid fa-arrow-right mr-1"></i>여기를 클릭하여 신청서 작성
+                    </p>
+                </div>
+                <div class="choice-card green bg-white p-10 rounded-3xl shadow-lg text-center" onclick="showForm('seek')">
+                    <div class="bg-emerald-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-user-check text-4xl text-emerald-600"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-emerald-600 mb-3">구직 신청</h4>
+                    <p class="text-gray-500 mb-4">일자리를 구하시는 근로자 분</p>
+                    <p class="text-sm text-emerald-600 font-medium">
+                        <i class="fa-solid fa-arrow-right mr-1"></i>여기를 클릭하여 신청서 작성
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2단계: 구인 신청 폼 (선택 시 표시) -->
+            <div id="post-area" class="form-hidden">
+                <button onclick="showChoice()" class="mb-4 text-gray-600 hover:text-blue-600 font-medium">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>신청 유형 다시 선택
+                </button>
+                <div class="bg-white p-8 rounded-3xl shadow-lg border-t-8 border-blue-600">
+                    <h4 class="text-2xl font-bold mb-6 flex items-center text-blue-600">
+                        <i class="fa-solid fa-building mr-3"></i>구인 신청 (사업주)
+                    </h4>
+                    <form id="job-post-form" class="space-y-4"
+                          name="job-post"
+                          method="POST"
+                          data-netlify="true"
+                          netlify-honeypot="bot-field">
+                        <!-- Netlify Forms 필수 hidden -->
+                        <input type="hidden" name="form-name" value="job-post">
+                        <p class="hidden"><label>이 칸은 비워두세요: <input name="bot-field"></label></p>
+
+                        <input type="hidden" name="form_type" value="구인 신청">
+                        <input type="hidden" name="submit_date" id="post_date">
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">상호명<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_company_name" class="input-field" required>
+                            </div>
+                            <div>
+                                <label class="form-label">업종<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_industry" class="input-field" placeholder="예: 건설업, 음식점" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">담당자명<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_manager_name" class="input-field" required>
+                            </div>
+                            <div>
+                                <label class="form-label">연락처<span class="required-mark">*</span></label>
+                                <input type="tel" name="employer_contact" class="input-field" placeholder="010-0000-0000" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">모집분야<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_job_category" class="input-field" placeholder="예: 목수, 잡부" required>
+                            </div>
+                            <div>
+                                <label class="form-label">모집인원<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_headcount" class="input-field" placeholder="예: 2명" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">근무지역<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_work_location" class="input-field" placeholder="예: 인천 남동구" required>
+                            </div>
+                            <div>
+                                <label class="form-label">근무기간</label>
+                                <input type="text" name="employer_work_period" class="input-field" placeholder="예: 일용직 / 1개월 / 상시">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">급여조건<span class="required-mark">*</span></label>
+                                <input type="text" name="employer_salary" class="input-field" placeholder="예: 일당 18만원" required>
+                            </div>
+                            <div>
+                                <label class="form-label">근무시간</label>
+                                <input type="text" name="employer_work_hours" class="input-field" placeholder="예: 07:00 ~ 17:00">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="form-label">복리조건 및 기타 (식사제공, 숙소, 교통비 등)</label>
+                            <textarea name="employer_benefits" class="input-field h-24" placeholder="중식 제공, 숙소 제공, 교통비 별도 등"></textarea>
+                        </div>
+                        
+                        <div class="flex items-start gap-2">
+                            <input type="checkbox" id="agree1" required class="mt-1">
+                            <label for="agree1" class="text-sm text-gray-600">개인정보 수집 및 이용에 동의합니다. (수집항목: 상호, 담당자, 연락처 / 보유기간: 매칭 종료 후 1년)</label>
+                        </div>
+                        
+                        <button type="submit" id="post-submit-btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-md transition disabled:bg-gray-400 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>구인 신청하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 2단계: 구직 신청 폼 (선택 시 표시) -->
+            <div id="seek-area" class="form-hidden">
+                <button onclick="showChoice()" class="mb-4 text-gray-600 hover:text-emerald-600 font-medium">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>신청 유형 다시 선택
+                </button>
+                <div class="bg-white p-8 rounded-3xl shadow-lg border-t-8 border-emerald-600">
+                    <h4 class="text-2xl font-bold mb-6 flex items-center text-emerald-600">
+                        <i class="fa-solid fa-user-check mr-3"></i>구직 신청 (근로자)
+                    </h4>
+                    <form id="job-seek-form" class="space-y-4"
+                          name="job-seek"
+                          method="POST"
+                          data-netlify="true"
+                          netlify-honeypot="bot-field">
+                        <!-- Netlify Forms 필수 hidden -->
+                        <input type="hidden" name="form-name" value="job-seek">
+                        <p class="hidden"><label>이 칸은 비워두세요: <input name="bot-field"></label></p>
+
+                        <input type="hidden" name="form_type" value="구직 신청">
+                        <input type="hidden" name="submit_date" id="seek_date">
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">성명<span class="required-mark">*</span></label>
+                                <input type="text" name="seeker_user_name" class="input-field" required>
+                            </div>
+                            <div>
+                                <label class="form-label">생년월일<span class="required-mark">*</span></label>
+                                <input type="text" name="seeker_birth" class="input-field" placeholder="예: 1980-01-01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">성별<span class="required-mark">*</span></label>
+                                <select name="seeker_gender" class="input-field" required>
+                                    <option value="">선택하세요</option>
+                                    <option value="남">남</option>
+                                    <option value="여">여</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">연락처<span class="required-mark">*</span></label>
+                                <input type="tel" name="seeker_contact" class="input-field" placeholder="010-0000-0000" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">지원분야<span class="required-mark">*</span></label>
+                                <input type="text" name="seeker_target_job" class="input-field" placeholder="예: 목수, 잡부, 가사도우미" required>
+                            </div>
+                            <div>
+                                <label class="form-label">희망근무지</label>
+                                <input type="text" name="seeker_hope_location" class="input-field" placeholder="예: 인천 전 지역">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">희망급여<span class="required-mark">*</span></label>
+                                <input type="text" name="seeker_salary_hope" class="input-field" placeholder="예: 일당 18만원" required>
+                            </div>
+                            <div>
+                                <label class="form-label">근무가능 시작일</label>
+                                <input type="text" name="seeker_start_date" class="input-field" placeholder="예: 즉시 / 2026-05-01">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="form-label">거주지역</label>
+                            <input type="text" name="seeker_residence" class="input-field" placeholder="예: 인천 남동구">
+                        </div>
+                        
+                        <div>
+                            <label class="form-label">자격증/면허</label>
+                            <input type="text" name="seeker_license" class="input-field" placeholder="예: 운전면허, 지게차, 요양보호사">
+                        </div>
+                        
+                        <div>
+                            <label class="form-label">경력사항 및 자기소개</label>
+                            <textarea name="seeker_experience" class="input-field h-24" placeholder="간단한 경력과 본인의 강점을 작성해주세요."></textarea>
+                        </div>
+                        
+                        <div class="flex items-start gap-2">
+                            <input type="checkbox" id="agree2" required class="mt-1">
+                            <label for="agree2" class="text-sm text-gray-600">개인정보 수집 및 이용에 동의합니다. (수집항목: 성명, 생년월일, 연락처 등 / 보유기간: 매칭 종료 후 1년)</label>
+                        </div>
+                        
+                        <button type="submit" id="seek-submit-btn" class="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold hover:bg-emerald-700 shadow-md transition disabled:bg-gray-400 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>구직 신청하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 오시는 길 섹션 -->
+    <section id="contact" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h3 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-2">Contact Us</h3>
+            <h2 class="text-4xl font-bold">오시는 길</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="h-[400px] rounded-2xl overflow-hidden shadow-xl">
+                <iframe 
+                    src="https://maps.google.com/maps?q=%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C+%EB%82%A8%EB%8F%99%EA%B5%AC+%EC%9E%A5%EC%8A%B9%EB%82%A8%EB%A1%9C+51&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-100 p-4 rounded-full text-blue-600 text-xl"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <p class="font-bold text-lg">주소</p>
+                        <p class="text-gray-600">인천광역시 남동구 장승남로 51 2층</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-100 p-4 rounded-full text-blue-600 text-xl"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <p class="font-bold text-lg">대표전화</p>
+                        <p class="text-3xl font-bold text-blue-600">032-279-5501</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-100 p-4 rounded-full text-blue-600 text-xl"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <p class="font-bold text-lg">이메일</p>
+                        <p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01686d6e77643030323331313141666c60686d2f626e6c">[email&#160;protected]</a></p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-blue-100 p-4 rounded-full text-blue-600 text-xl"><i class="fa-regular fa-clock"></i></div>
+                    <div>
+                        <p class="font-bold text-lg">상담시간</p>
+                        <p class="text-gray-600">평일 08:00 ~ 18:00 / 토요일 08:00 ~ 13:00</p>
+                        <p class="text-sm text-gray-500">※ 일요일 및 공휴일 휴무</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="bg-slate-900 text-white/60 py-10 text-center border-t border-white/10">
+        <p class="text-white font-bold mb-2 text-lg">만사인력 | 대표 정혜옥</p>
+        <p class="text-sm mb-1">인천광역시 남동구 장승남로 51 2층 | 대표전화 032-279-5501</p>
+        <p class="text-sm">© 2026 Mansa Manpower Service. All rights reserved.</p>
+    </footer>
+
+    <!-- 알림 토스트 -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ============================================================
+         Netlify Forms 감지용 숨김 폼 (배포 시 Netlify 빌드봇이
+         이 폼을 읽어서 form 정의를 등록합니다. 절대 삭제 금지)
+         ============================================================ -->
+    <form name="job-post" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="form_type">
+        <input type="text" name="submit_date">
+        <input type="text" name="employer_company_name">
+        <input type="text" name="employer_industry">
+        <input type="text" name="employer_manager_name">
+        <input type="text" name="employer_contact">
+        <input type="text" name="employer_job_category">
+        <input type="text" name="employer_headcount">
+        <input type="text" name="employer_work_location">
+        <input type="text" name="employer_work_period">
+        <input type="text" name="employer_salary">
+        <input type="text" name="employer_work_hours">
+        <textarea name="employer_benefits"></textarea>
+        <input type="text" name="bot-field">
+    </form>
+    <form name="job-seek" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="form_type">
+        <input type="text" name="submit_date">
+        <input type="text" name="seeker_user_name">
+        <input type="text" name="seeker_birth">
+        <input type="text" name="seeker_gender">
+        <input type="text" name="seeker_contact">
+        <input type="text" name="seeker_target_job">
+        <input type="text" name="seeker_hope_location">
+        <input type="text" name="seeker_salary_hope">
+        <input type="text" name="seeker_start_date">
+        <input type="text" name="seeker_residence">
+        <input type="text" name="seeker_license">
+        <textarea name="seeker_experience"></textarea>
+        <input type="text" name="bot-field">
+    </form>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    /* ========================================================================
+       ⚙️ 설정 영역 - 본인의 EmailJS / Google Apps Script 정보
+       ======================================================================== */
+    
+    // ① EmailJS Public Key
+    const EMAILJS_PUBLIC_KEY = "P-qWdDEs7i2FeGeOh";
+    
+    // ② EmailJS Service ID
+    const EMAILJS_SERVICE_ID = "service_d2zp5ju";
+    
+    // ③ EmailJS Template ID (구인/구직 공용 - 둘 다 같은 템플릿 사용)
+    const EMAILJS_TEMPLATE_ID = "template_k2qb71i";
+    
+    // ④ Google Apps Script Web App URL (만사인력_DB 시트 자동 저장)
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyxFYu7kgn2gbFsifvtMnfw3zQqMMKqkmMjxXCJYSCXb5murLcWOxO0smAcaktk0-tigA/exec";
+
+    // ⑤ 알림 받을 이메일 주소 (EmailJS 템플릿에서 {{to_email}} 변수 사용 시)
+    const NOTIFY_EMAIL = "ilove1132000@gmail.com";
+    
+    /* ======================================================================== */
+
+    // EmailJS 초기화 (v4 권장 옵션 포함)
+    (function initEmailJS() {
+        try {
+            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY) {
+                emailjs.init({
+                    publicKey: EMAILJS_PUBLIC_KEY,
+                    // 봇/Headless 차단 (스팸 방지)
+                    blockHeadless: true,
+                    // 같은 사용자가 너무 자주 보낼 때 차단
+                    limitRate: {
+                        id: 'mansa-app',
+                        throttle: 10000  // 10초
+                    }
+                });
+                console.log('✅ EmailJS 초기화 완료');
+            } else {
+                console.error('❌ EmailJS 라이브러리 로드 실패');
+            }
+        } catch (e) {
+            console.error('EmailJS 초기화 오류:', e);
+        }
+    })();
+
+    // ========== 폼 선택 화면 전환 ==========
+    function showForm(type) {
+        document.getElementById('choice-area').classList.add('form-hidden');
+        if (type === 'post') {
+            document.getElementById('post-area').classList.remove('form-hidden');
+            document.getElementById('seek-area').classList.add('form-hidden');
+        } else {
+            document.getElementById('seek-area').classList.remove('form-hidden');
+            document.getElementById('post-area').classList.add('form-hidden');
+        }
+        // 폼 영역으로 부드럽게 스크롤
+        document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showChoice() {
+        document.getElementById('choice-area').classList.remove('form-hidden');
+        document.getElementById('post-area').classList.add('form-hidden');
+        document.getElementById('seek-area').classList.add('form-hidden');
+        document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 토스트 알림
+    function showToast(message, type) {
+        type = type || 'success';
+        const toast = document.getElementById('toast');
+        toast.innerHTML = message;
+        toast.className = 'toast ' + type + ' show';
+        setTimeout(function() { 
+            toast.classList.remove('show'); 
+        }, 5000);
+    }
+
+    // 현재 시간
+    function getNowString() {
+        const now = new Date();
+        return now.getFullYear() + '-' + 
+            String(now.getMonth()+1).padStart(2,'0') + '-' + 
+            String(now.getDate()).padStart(2,'0') + ' ' +
+            String(now.getHours()).padStart(2,'0') + ':' + 
+            String(now.getMinutes()).padStart(2,'0') + ':' +
+            String(now.getSeconds()).padStart(2,'0');
+    }
+
+    // Google Sheets로 데이터 전송
+    function saveToGoogleSheets(formData) {
+        return new Promise(function(resolve) {
+            if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL.indexOf('script.google.com') === -1) {
+                console.log('⚠️ Google Sheets URL이 설정되지 않았습니다.');
+                resolve(false);
+                return;
+            }
+            try {
+                fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(formData)
+                }).then(function() {
+                    console.log('✅ Google Sheets 저장 요청 전송 완료');
+                    resolve(true);
+                }).catch(function(error) {
+                    console.error('❌ Google Sheets 저장 실패:', error);
+                    resolve(false);
+                });
+            } catch (error) {
+                console.error('❌ Google Sheets 호출 오류:', error);
+                resolve(false);
+            }
+        });
+    }
+
+    // 폼 데이터를 객체로 변환
+    function getFormData(form) {
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach(function(value, key) { 
+            data[key] = value; 
+        });
+        return data;
+    }
+
+    // ========== 구인 신청 전용 이메일 본문 생성 ==========
+    function buildJobPostEmailParams(data) {
+        // 구인 신청 - 구인자 데이터만 사용 (다른 양식 변수는 절대 참조하지 않음)
+        const subject = '[만사인력] 구인 신청서 접수 - ' + (data.employer_company_name || '미입력');
+        const message = 
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            '📌 구인 신청서가 접수되었습니다.\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+            '◆ 신청 유형 : 구인 신청 (사업주)\n' +
+            '◆ 접수 일시 : ' + (data.submit_date || getNowString()) + '\n\n' +
+            '【 업체 정보 】\n' +
+            '• 상호명      : ' + (data.employer_company_name || '-') + '\n' +
+            '• 업종        : ' + (data.employer_industry || '-') + '\n' +
+            '• 담당자명    : ' + (data.employer_manager_name || '-') + '\n' +
+            '• 연락처      : ' + (data.employer_contact || '-') + '\n\n' +
+            '【 모집 정보 】\n' +
+            '• 모집분야    : ' + (data.employer_job_category || '-') + '\n' +
+            '• 모집인원    : ' + (data.employer_headcount || '-') + '\n' +
+            '• 근무지역    : ' + (data.employer_work_location || '-') + '\n' +
+            '• 근무기간    : ' + (data.employer_work_period || '-') + '\n' +
+            '• 급여조건    : ' + (data.employer_salary || '-') + '\n' +
+            '• 근무시간    : ' + (data.employer_work_hours || '-') + '\n\n' +
+            '【 복리조건/기타 】\n' +
+            (data.employer_benefits || '(작성 안 함)') + '\n\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            '신속하게 연락드려 주시기 바랍니다.\n' +
+            '만사인력 (032-279-5501)\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+        
+        // ★ 매우 중요 ★
+        // 구인 신청 시에는 오직 message + 구인자 전용 변수만 전송합니다.
+        // (옛 공용 변수 contact, user_name 등은 절대로 포함하지 않음)
+        // → EmailJS 템플릿에서 다른 양식의 빈 칸이 채워질 위험 차단.
+        return {
+            to_email: NOTIFY_EMAIL,
+            to_name: '만사인력',
+            from_name: (data.employer_company_name || '구인 신청자') + ' (구인)',
+            reply_to: data.employer_contact || NOTIFY_EMAIL,
+            subject: subject,
+            form_type: '구인 신청',
+            message: message,
+            // 구인자 전용 개별 변수 (EmailJS 템플릿에서 개별 매핑 시 사용)
+            employer_company_name: data.employer_company_name || '',
+            employer_industry: data.employer_industry || '',
+            employer_manager_name: data.employer_manager_name || '',
+            employer_contact: data.employer_contact || '',
+            employer_job_category: data.employer_job_category || '',
+            employer_headcount: data.employer_headcount || '',
+            employer_work_location: data.employer_work_location || '',
+            employer_work_period: data.employer_work_period || '',
+            employer_salary: data.employer_salary || '',
+            employer_work_hours: data.employer_work_hours || '',
+            employer_benefits: data.employer_benefits || ''
+        };
+    }
+
+    // ========== 구직 신청 전용 이메일 본문 생성 ==========
+    function buildJobSeekEmailParams(data) {
+        // 구직 신청 - 구직자 데이터만 사용 (다른 양식 변수는 절대 참조하지 않음)
+        const subject = '[만사인력] 구직 신청서 접수 - ' + (data.seeker_user_name || '미입력');
+        const message = 
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            '📌 구직 신청서가 접수되었습니다.\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+            '◆ 신청 유형 : 구직 신청 (근로자)\n' +
+            '◆ 접수 일시 : ' + (data.submit_date || getNowString()) + '\n\n' +
+            '【 인적 사항 】\n' +
+            '• 성명        : ' + (data.seeker_user_name || '-') + '\n' +
+            '• 생년월일    : ' + (data.seeker_birth || '-') + '\n' +
+            '• 성별        : ' + (data.seeker_gender || '-') + '\n' +
+            '• 연락처      : ' + (data.seeker_contact || '-') + '\n' +
+            '• 거주지역    : ' + (data.seeker_residence || '-') + '\n\n' +
+            '【 희망 근무 조건 】\n' +
+            '• 지원분야      : ' + (data.seeker_target_job || '-') + '\n' +
+            '• 희망근무지    : ' + (data.seeker_hope_location || '-') + '\n' +
+            '• 희망급여      : ' + (data.seeker_salary_hope || '-') + '\n' +
+            '• 근무가능일    : ' + (data.seeker_start_date || '-') + '\n' +
+            '• 자격증/면허   : ' + (data.seeker_license || '-') + '\n\n' +
+            '【 경력사항 / 자기소개 】\n' +
+            (data.seeker_experience || '(작성 안 함)') + '\n\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            '적합한 일자리를 매칭해 주시기 바랍니다.\n' +
+            '만사인력 (032-279-5501)\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+
+        // ★ 매우 중요 ★
+        // 구직 신청 시에는 오직 message + 구직자 전용 변수만 전송합니다.
+        return {
+            to_email: NOTIFY_EMAIL,
+            to_name: '만사인력',
+            from_name: (data.seeker_user_name || '구직 신청자') + ' (구직)',
+            reply_to: data.seeker_contact || NOTIFY_EMAIL,
+            subject: subject,
+            form_type: '구직 신청',
+            message: message,
+            // 구직자 전용 개별 변수 (EmailJS 템플릿에서 개별 매핑 시 사용)
+            seeker_user_name: data.seeker_user_name || '',
+            seeker_birth: data.seeker_birth || '',
+            seeker_gender: data.seeker_gender || '',
+            seeker_contact: data.seeker_contact || '',
+            seeker_residence: data.seeker_residence || '',
+            seeker_target_job: data.seeker_target_job || '',
+            seeker_hope_location: data.seeker_hope_location || '',
+            seeker_salary_hope: data.seeker_salary_hope || '',
+            seeker_start_date: data.seeker_start_date || '',
+            seeker_license: data.seeker_license || '',
+            seeker_experience: data.seeker_experience || ''
+        };
+    }
+
+    // ========== Netlify Forms 백업 전송 ==========
+    // EmailJS가 실패해도 Netlify 대시보드에서 신청 내역을 확인할 수 있습니다.
+    function saveToNetlify(formName, formData) {
+        return new Promise(function(resolve) {
+            try {
+                const body = new URLSearchParams();
+                body.append('form-name', formName);
+                Object.keys(formData).forEach(function(k) {
+                    if (k !== 'form-name' && k !== 'bot-field') {
+                        body.append(k, formData[k] || '');
+                    }
+                });
+                fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: body.toString()
+                }).then(function(r) {
+                    if (r.ok) {
+                        console.log('✅ Netlify Forms 저장 완료');
+                        resolve(true);
+                    } else {
+                        console.warn('⚠️ Netlify Forms 응답 코드:', r.status);
+                        resolve(false);
+                    }
+                }).catch(function(err) {
+                    console.warn('⚠️ Netlify Forms 저장 실패 (로컬환경에서는 정상):', err);
+                    resolve(false);
+                });
+            } catch (e) {
+                console.warn('Netlify Forms 호출 오류:', e);
+                resolve(false);
+            }
+        });
+    }
+
+    // ========== 공통 폼 제출 처리 ==========
+    async function handleFormSubmit(form, btnId, formKind, successMsg) {
+        const btn = document.getElementById(btnId);
+        const originalBtnText = btn.innerHTML;
+        
+        if (typeof emailjs === 'undefined') {
+            showToast('❌ 이메일 시스템 로드 실패<br>전화(032-279-5501)로 문의해주세요.', 'error');
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>전송 중입니다...';
+        
+        // 현재 시각 기록
+        const nowStr = getNowString();
+        if (formKind === 'post') {
+            document.getElementById('post_date').value = nowStr;
+        } else {
+            document.getElementById('seek_date').value = nowStr;
+        }
+
+        // 해당 폼 데이터만 가져오기 (다른 폼 데이터는 절대 섞이지 않음)
+        const formData = getFormData(form);
+        const netlifyFormName = (formKind === 'post') ? 'job-post' : 'job-seek';
+        
+        let emailOK = false;
+        let sheetsOK = false;
+        let netlifyOK = false;
+        
+        try {
+            // ① 이메일 전송 - 해당 폼 전용 파라미터만 사용
+            let emailParams;
+            if (formKind === 'post') {
+                emailParams = buildJobPostEmailParams(formData);
+            } else {
+                emailParams = buildJobSeekEmailParams(formData);
+            }
+            console.log('📧 이메일 파라미터:', emailParams);
+
+            // 3채널 병렬 전송: EmailJS + Google Sheets + Netlify Forms
+            const [emailRes, sheetsRes, netlifyRes] = await Promise.all([
+                // ① EmailJS
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams)
+                    .then(function(r) {
+                        console.log('✅ 이메일 전송 성공:', r.status, r.text);
+                        return true;
+                    })
+                    .catch(function(err) {
+                        console.error('❌ 이메일 전송 실패:', err);
+                        return false;
+                    }),
+                // ② Google Sheets
+                saveToGoogleSheets(formData),
+                // ③ Netlify Forms (백업)
+                saveToNetlify(netlifyFormName, formData)
+            ]);
+            emailOK = emailRes;
+            sheetsOK = sheetsRes;
+            netlifyOK = netlifyRes;
+            
+            // 결과 표시 (셋 중 하나라도 성공하면 OK)
+            if (emailOK || sheetsOK || netlifyOK) {
+                const channels = [];
+                if (emailOK) channels.push('이메일');
+                if (sheetsOK) channels.push('데이터베이스');
+                if (netlifyOK) channels.push('Netlify');
+                const statusMsg = '✅ ' + successMsg +
+                    '<br><small>(' + channels.join(' + ') + ' 저장 완료)</small>';
+                showToast(statusMsg, 'success');
+                form.reset();
+                // 제출 후 선택 화면으로 복귀
+                setTimeout(showChoice, 2000);
+            } else {
+                showToast('❌ 전송에 실패했습니다.<br>전화(032-279-5501)로 직접 문의해주세요.', 'error');
+            }
+            
+        } catch (error) {
+            console.error('전체 처리 오류:', error);
+            showToast('❌ 시스템 오류가 발생했습니다.<br>전화(032-279-5501)로 문의해주세요.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalBtnText;
+        }
+    }
+
+    // DOM 로드 완료 후 이벤트 바인딩
+    document.addEventListener('DOMContentLoaded', function() {
+        const postForm = document.getElementById('job-post-form');
+        const seekForm = document.getElementById('job-seek-form');
+        
+        if (postForm) {
+            postForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                handleFormSubmit(
+                    this, 
+                    'post-submit-btn',
+                    'post',
+                    '구인 신청이 접수되었습니다!<br>빠른 시일 내에 연락드리겠습니다.'
+                );
+            });
+        }
+        
+        if (seekForm) {
+            seekForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                handleFormSubmit(
+                    this, 
+                    'seek-submit-btn',
+                    'seek',
+                    '구직 신청이 등록되었습니다!<br>적합한 일자리를 찾아 연락드리겠습니다.'
+                );
+            });
+        }
+        
+        console.log('✅ 만사인력 홈페이지 초기화 완료');
+    });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
